@@ -1,0 +1,281 @@
+/* ================================================================
+   Expense & Budget Visualizer — style.css
+   One file for all layout, components, and responsive rules.
+   ================================================================ */
+
+/* ── Reset ──────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ── Design tokens ──────────────────────────────────────────── */
+:root {
+  --bg:          #f1f5f9;
+  --surface:     #ffffff;
+  --primary:     #4f46e5;
+  --primary-dk:  #4338ca;
+  --danger:      #ef4444;
+  --text:        #1e293b;
+  --text-muted:  #64748b;
+  --border:      #e2e8f0;
+
+  --c-food:      #f97316;
+  --c-transport: #3b82f6;
+  --c-fun:       #a855f7;
+
+  --r:    12px;
+  --r-sm: 8px;
+  --sh:   0 2px 12px rgba(0,0,0,.08);
+  --sh-lg:0 4px 24px rgba(0,0,0,.12);
+
+  --font: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+/* ── Base ───────────────────────────────────────────────────── */
+html { font-size: 16px; scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Banner ─────────────────────────────────────────────────── */
+.app-banner {
+  position: sticky; top: 0; z-index: 50;
+  padding: 10px 20px;
+  font-size: .875rem; font-weight: 500; text-align: center;
+  background: #fef3c7; color: #92400e;
+  border-bottom: 1px solid #fde68a;
+}
+.app-banner.is-error { background: #fee2e2; color: #991b1b; border-color: #fca5a5; }
+.app-banner.hidden   { display: none; }
+
+/* ── Header ─────────────────────────────────────────────────── */
+.app-header {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 16px 24px;
+  box-shadow: var(--sh);
+}
+.header-inner {
+  max-width: 1100px; margin: 0 auto;
+  display: flex; align-items: center; gap: 12px;
+}
+.header-icon { font-size: 1.75rem; line-height: 1; }
+.app-header h1 {
+  font-size: 1.375rem; font-weight: 700;
+  color: var(--primary); letter-spacing: -.02em;
+}
+
+/* ── Main ───────────────────────────────────────────────────── */
+.app-main {
+  flex: 1;
+  max-width: 1100px; width: 100%;
+  margin: 0 auto;
+  padding: 24px 16px 48px;
+  display: flex; flex-direction: column; gap: 20px;
+}
+
+/* ── Balance card ───────────────────────────────────────────── */
+.balance-card {
+  background: linear-gradient(135deg, #4f46e5, #7c3aed);
+  color: #fff;
+  border-radius: var(--r);
+  padding: 28px 32px;
+  text-align: center;
+  box-shadow: var(--sh-lg);
+}
+.balance-label {
+  font-size: .875rem; font-weight: 500;
+  opacity: .85; text-transform: uppercase; letter-spacing: .08em;
+  margin-bottom: 8px;
+}
+.balance-amount {
+  font-size: 2.5rem; font-weight: 800;
+  letter-spacing: -.03em; line-height: 1.1;
+}
+
+/* ── Generic card ───────────────────────────────────────────── */
+.card {
+  background: var(--surface);
+  border-radius: var(--r);
+  padding: 24px;
+  box-shadow: var(--sh);
+  border: 1px solid var(--border);
+}
+.card-title {
+  font-size: 1rem; font-weight: 700;
+  margin-bottom: 20px; padding-bottom: 12px;
+  border-bottom: 2px solid var(--border);
+}
+
+/* ── Two-column grid ────────────────────────────────────────── */
+.top-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+/* ── Chart ──────────────────────────────────────────────────── */
+.chart-wrap {
+  display: flex; align-items: center; justify-content: center;
+  min-height: 260px;
+  position: relative;
+}
+#expense-chart { max-width: 100%; max-height: 280px; }
+
+/* ── Form ───────────────────────────────────────────────────── */
+.field {
+  display: flex; flex-direction: column; gap: 5px;
+  margin-bottom: 16px;
+}
+.field label { font-size: .875rem; font-weight: 600; }
+
+.field input,
+.field select {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--r-sm);
+  font-size: .9375rem; font-family: var(--font);
+  color: var(--text); background: var(--surface);
+  outline: none;
+  transition: border-color .15s, box-shadow .15s;
+  appearance: auto;
+}
+.field input:focus,
+.field select:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(79,70,229,.15);
+}
+.field input.invalid,
+.field select.invalid {
+  border-color: var(--danger);
+  box-shadow: 0 0 0 3px rgba(239,68,68,.12);
+}
+
+/* hide number spinners */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+input[type="number"] { -moz-appearance: textfield; }
+
+.field-error {
+  font-size: .8125rem; color: var(--danger);
+  font-weight: 500; min-height: 1.1em; display: block;
+}
+
+.btn-add {
+  width: 100%; padding: 12px;
+  background: var(--primary); color: #fff;
+  border: none; border-radius: var(--r-sm);
+  font-size: .9375rem; font-weight: 700; font-family: var(--font);
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(79,70,229,.3);
+  transition: background .15s, box-shadow .15s, transform .1s;
+  margin-top: 4px;
+}
+.btn-add:hover  { background: var(--primary-dk); box-shadow: 0 4px 12px rgba(79,70,229,.4); }
+.btn-add:active { transform: translateY(1px); }
+.btn-add:focus-visible { outline: 3px solid var(--primary); outline-offset: 2px; }
+
+/* ── Transaction list ───────────────────────────────────────── */
+.tx-list {
+  max-height: 380px; overflow-y: auto;
+  display: flex; flex-direction: column; gap: 10px;
+  padding-right: 4px;
+}
+.tx-list::-webkit-scrollbar { width: 6px; }
+.tx-list::-webkit-scrollbar-track { background: var(--bg); border-radius: 3px; }
+.tx-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+.tx-list::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+/* Transaction item */
+.tx-item {
+  display: flex; align-items: center; gap: 14px;
+  padding: 13px 15px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  transition: box-shadow .15s;
+  animation: slideIn .2s ease;
+}
+.tx-item:hover { box-shadow: 0 2px 8px rgba(0,0,0,.08); }
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Category icon badge */
+.tx-badge {
+  flex-shrink: 0;
+  width: 40px; height: 40px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem;
+}
+.tx-badge.Food      { background: #fff7ed; }
+.tx-badge.Transport { background: #eff6ff; }
+.tx-badge.Fun       { background: #faf5ff; }
+
+.tx-info { flex: 1; min-width: 0; }
+.tx-name {
+  font-size: .9375rem; font-weight: 600;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.tx-meta { font-size: .8125rem; color: var(--text-muted); margin-top: 2px; }
+
+.tx-amount {
+  font-size: .9375rem; font-weight: 700;
+  white-space: nowrap; flex-shrink: 0;
+}
+
+.btn-del {
+  flex-shrink: 0;
+  width: 32px; height: 32px; border-radius: 50%;
+  border: none; background: transparent;
+  color: var(--text-muted); cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; line-height: 1;
+  transition: background .15s, color .15s;
+}
+.btn-del:hover { background: #fee2e2; color: var(--danger); }
+.btn-del:focus-visible { outline: 2px solid var(--danger); outline-offset: 2px; }
+
+/* ── Empty state ────────────────────────────────────────────── */
+.empty-msg {
+  font-size: .9rem; color: var(--text-muted);
+  text-align: center; padding: 24px 16px; font-style: italic;
+}
+
+/* ── Footer ─────────────────────────────────────────────────── */
+.app-footer {
+  text-align: center; padding: 14px 24px;
+  font-size: .8125rem; color: var(--text-muted);
+  border-top: 1px solid var(--border);
+  background: var(--surface);
+}
+
+/* ── Responsive: tablet ─────────────────────────────────────── */
+@media (max-width: 1023px) {
+  .balance-amount { font-size: 2rem; }
+}
+
+/* ── Responsive: mobile ─────────────────────────────────────── */
+@media (max-width: 767px) {
+  .app-header { padding: 14px 16px; }
+  .app-header h1 { font-size: 1.125rem; }
+
+  .app-main { padding: 16px 12px 32px; gap: 16px; }
+
+  .balance-card { padding: 20px; }
+  .balance-amount { font-size: 1.75rem; }
+
+  /* stack chart and form vertically */
+  .top-grid { grid-template-columns: 1fr; }
+
+  .card { padding: 18px 16px; }
+  .tx-list { max-height: 300px; }
+}

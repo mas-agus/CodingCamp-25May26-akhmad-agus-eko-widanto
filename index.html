@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Expense &amp; Budget Visualizer</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- Notification banner (storage warnings, corrupt data, etc.) -->
+  <div id="app-banner" class="app-banner hidden" role="alert" aria-live="polite"></div>
+
+  <header class="app-header">
+    <div class="header-inner">
+      <span class="header-icon" aria-hidden="true">💰</span>
+      <h1>Expense &amp; Budget Visualizer</h1>
+    </div>
+  </header>
+
+  <main class="app-main">
+
+    <!-- ── Total Balance ── -->
+    <section class="balance-card" aria-label="Total Balance">
+      <p class="balance-label">Total Spending</p>
+      <p id="balance-amount" class="balance-amount">$0.00</p>
+    </section>
+
+    <!-- ── Chart + Form (two-column on desktop) ── -->
+    <div class="top-grid">
+
+      <!-- Pie Chart -->
+      <section class="card" aria-label="Spending Chart">
+        <h2 class="card-title">Spending by Category</h2>
+        <div class="chart-wrap">
+          <canvas id="expense-chart" width="300" height="300"
+            role="img" aria-label="Pie chart of spending by category"></canvas>
+          <p id="chart-empty" class="empty-msg">No data to display yet.</p>
+        </div>
+      </section>
+
+      <!-- Add Transaction Form -->
+      <section class="card" aria-label="Add Transaction">
+        <h2 class="card-title">Add Transaction</h2>
+        <form id="tx-form" novalidate>
+
+          <div class="field">
+            <label for="f-name">Item Name</label>
+            <input id="f-name" type="text" placeholder="e.g. Lunch" maxlength="100" autocomplete="off" />
+            <span id="f-name-err" class="field-error" role="alert"></span>
+          </div>
+
+          <div class="field">
+            <label for="f-amount">Amount ($)</label>
+            <input id="f-amount" type="number" placeholder="e.g. 12.50" min="0.01" step="0.01" />
+            <span id="f-amount-err" class="field-error" role="alert"></span>
+          </div>
+
+          <div class="field">
+            <label for="f-category">Category</label>
+            <select id="f-category">
+              <option value="">— Select category —</option>
+              <option value="Food">🍔 Food</option>
+              <option value="Transport">🚗 Transport</option>
+              <option value="Fun">🎉 Fun</option>
+            </select>
+            <span id="f-category-err" class="field-error" role="alert"></span>
+          </div>
+
+          <button type="submit" class="btn-add">+ Add Transaction</button>
+        </form>
+      </section>
+
+    </div><!-- /.top-grid -->
+
+    <!-- ── Transaction List ── -->
+    <section class="card" aria-label="Transaction History">
+      <h2 class="card-title">Transaction History</h2>
+      <div id="tx-list" class="tx-list" role="list" aria-live="polite">
+        <p id="list-empty" class="empty-msg">No transactions yet. Add one above!</p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="app-footer">
+    <p>All data is stored locally in your browser — nothing is sent to any server.</p>
+  </footer>
+
+  <!-- Chart.js loaded before app.js so Chart is available when the script runs -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
